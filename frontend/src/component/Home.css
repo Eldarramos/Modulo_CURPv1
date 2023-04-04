@@ -1,0 +1,37 @@
+button {
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  color: #747474;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 20px 40px;
+  position:relative;
+  margin-top: 20%;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 250px;
+  height: 65px;
+  text-align:center;
+  font-weight: bold;
+  justify-content: center;
+}
+body{
+  background: #B8B4FB;
+}
+
+button:hover {
+  background-color: #0062cc;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display:flexbox;
+  align-items: center;
+  justify-content: center;
+
+}
