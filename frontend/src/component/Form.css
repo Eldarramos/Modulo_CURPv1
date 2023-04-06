@@ -35,14 +35,22 @@ input {
   color: #6b67dd;
     font-size: 1.2rem;
 }
-input:active{
-  border: 1px solid #EE5253;
 
+select {
+  height: 42px;
+  transition: all 0.5s ease;
+  border-color: #ccc;
+  border-width: 1px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  width: 90%;
+  max-width: 400px;
+  color: #6b67dd;
+  font-size: 1.2rem;
 }
-input:active{
-  border: 1px solid #EE5253;
 
-}
+
 
 .error {
   color: red;
