@@ -25,13 +25,23 @@ label {
 
 input {
   height: 30px;
-  border-color: #ccc;
-  border-width: 1px;
+  border: none;
+    transition: all 0.5s ease;
   border-radius: 5px;
   margin: 5px;
-  padding: 5px;
+  padding-left: 10px;
   width: 90%;
   max-width: 400px;
+  color: #6b67dd;
+    font-size: 1.2rem;
+}
+input:active{
+  border: 1px solid #EE5253;
+
+}
+input:active{
+  border: 1px solid #EE5253;
+
 }
 
 .error {

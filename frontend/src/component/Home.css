@@ -5,33 +5,44 @@ button {
   color: #747474;
   cursor: pointer;
   font-size: 1.2rem;
-  padding: 20px 40px;
-  position:relative;
-  margin-top: 20%;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin: 0 0.8rem;
   width: 250px;
   height: 65px;
   text-align:center;
   font-weight: bold;
   justify-content: center;
+  transition: all 0.5s ease;
+}
+.Home{
+  width: 100vw;
+  height: 75vh;
+  display: grid;
+grid-template-columns: 1fr;
+grid-template-rows: 0.3fr 1fr;
+padding-top: 2rem;
+grid-row-gap: 10px;
+align-items: center;
 }
 body{
   background: #B8B4FB;
 }
 
 button:hover {
-  background-color: #0062cc;
+  background-color: #ee5253;
+  color: white;
 }
 
 h1 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
 
 .button-container {
   display:flexbox;
   align-items: center;
   justify-content: center;
-
+  padding-bottom: 2rem;
 }
