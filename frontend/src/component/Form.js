@@ -37,7 +37,7 @@ const Formulario = () => {
         pais:pais, estado:estado, ciudad:ciudad , correo:correo,  curp:curp
      
        })
-    navigate('/')
+    navigate('/Home')
   }
  
 
