@@ -6,6 +6,7 @@ const formModel = db.define('forms',{
     apellidoP: {type: DataTypes.STRING},
     apellidoM: {type: DataTypes.STRING},
     genero: {type: DataTypes.STRING},
+    fecha: {type:DataTypes.DATE},
     telefono: {type: DataTypes.NUMBER},
     celular: {type: DataTypes.NUMBER},
     escuela: {type: DataTypes.STRING},
@@ -14,7 +15,16 @@ const formModel = db.define('forms',{
     estado: {type: DataTypes.STRING},
     ciudad: {type: DataTypes.STRING},
     correo: {type: DataTypes.STRING},
-    curp: {type: DataTypes.STRING}
+    curp: {type: DataTypes.STRING},
+    //12 de abril
+    idstate: {type: DataTypes.NUMBER},
+    idcity: {type: DataTypes.NUMBER},
+    idcolony: {type: DataTypes.NUMBER},
+    calle: {type: DataTypes.STRING},
+    numero: {type: DataTypes.STRING},
+    postal_code: {type: DataTypes.STRING}
+    
+   
 })
 
 export default formModel
