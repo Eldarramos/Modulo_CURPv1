@@ -1,15 +1,18 @@
 .container {
   display: flex;
   flex-flow: row wrap;
-  /*display:grid;
-  grid-template-columns: repeat(2, 1fr);
+ /* display:grid;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 100px 100px;
-  /*grid-template-columns: 90%;
+  grid-template-columns: 90%;
   grid-template-columns: 0.5fr 0.5fr;
   /* flex-direction:column; Cambiamos la dirección del eje principal a columna */
   justify-content: space-around; /* Alineamos los elementos al inicio del eje principal */
   align-items: center;
   padding: 10px;
+}
+body{
+  background: #F1F5F8;
 }
 
 .input-container {
@@ -68,14 +71,7 @@ select {
   width: 200px;
   height: 60px;
   margin-bottom: 10px;
-  justify-content:flex-end;
+  justify-content:center;
   align-items: center;
 }
 
-/*<div class="input-container">
-<label className='label'>Genero:</label>
-<select className='input' value={genero} onChange={(e) => setGenero(e.target.value)}>
-<option value="Femenino">Femenino</option>
-<option value="Masculino">Masculino</option>
-</select>
-</div>*/

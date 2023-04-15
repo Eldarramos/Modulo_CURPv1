@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {Link, useNavigate} from 'react-router-dom'
 import './Form.css';
 
 const URI = 'http://localhost:8000/forms/'
-
+const URI2 = 'http://localhost:8000/states/'
 
 const Formulario = () => {
   const [nombre, setNombre] = useState('');
@@ -20,21 +20,99 @@ const Formulario = () => {
   const [trabajo, setTrabajo] = useState('');
   const [pais, setPais] = useState('');
   const [estado, setestado] = useState('');
-  const [ciudad, setCiudad] = useState('');
+  const [calle, setCalle] = useState('');
+  const [numero, setNumero] = useState('');
   const [correo, setCorreo] = useState('');
   const [curp, setCurp] = useState('');
   const [mensajeError, setMensajeError] = useState('');
   const navigate = useNavigate();
 
-  /*const handleFechaChange = date => {
-    setFecha(date);
-  };*/
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [idstate, setIdstate] = useState('');
+  const [idcity, setIdcity] = useState('');
+ 
+  const [colonies, setColonies] = useState([]);
+  const [idcolony, setIdColony] = useState('');
+
+  const [codigospostales, setCodigospostales] = useState([]);
+  const [postal_code, setPostal_code] = useState('');
+
+  useEffect(() => {
+    axios.get(URI2)
+      .then(response => {
+        setStates(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+
+  useEffect(() => {
+   
+    axios.get(`http://localhost:8000/cities/${idstate}`)
+      .then(response => {
+        console.log(response.data);
+        setCities(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [idstate]);
+
+  useEffect(() => {
+   
+    axios.get(`http://localhost:8000/colonies/${idcity}`)
+      .then(response => {
+        setColonies(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [idcity]);
+
+  useEffect(() => {
+   
+    axios.get(`http://localhost:8000/colonies/${idcolony}/postal_code`)
+      .then(response => {
+        setCodigospostales(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [idcolony]);
+
+  const handleStateChange = event => {
+    setIdstate(event.target.value);
+    setIdcity('');
+    setIdColony('');
+  };
+
+  const handleCityChange = event => {
+    setIdcity(event.target.value);
+    setIdColony('');
+    
+    
+  };
+
+  const handleColonyChange = event => {
+    setIdColony(event.target.value);
+    
+  };
+ 
+  const handleCodigoChange = event => {
+    setPostal_code(event.target.value);
+  };
+//Funcion para guardar datos en db
 
   const guardarDatos = async (e) =>{
     e.preventDefault()
     await axios.post(URI, {nombre: nombre, apellidoP: apellidoP, apellidoM: apellidoM, genero:genero,
          fecha: fecha, telefono:telefono, celular:celular,  escuela:escuela, trabajo:trabajo, 
-        pais:pais, estado:estado, ciudad:ciudad , correo:correo,  curp:curp
+        pais:pais, estado:estado , correo:correo,  curp:curp, idstate: idstate, idcity:idcity, idcolony:idcolony, calle:calle,
+        numero:numero, postal_code:postal_code
      
        })
     navigate('/Home')
@@ -186,7 +264,7 @@ const validarDatos = (nombre, apellidoP, apellidoM, genero, estado, fecha) => {
     return ;
   }
 
- const primerLetraapellidoM = procesarCadena(apellidoM).charAt(0);
+  const primerLetraapellidoM = procesarCadena(apellidoM).charAt(0);
   const primerasDosLetrasapellidoP = procesarCadena(apellidoP).slice(0, 2);
   //const primerasDosLetrasNombre = `${seg_cons(procesarCadena(nombre))}${voc_int(procesarCadena(nombre))}`;
   const primerasDosLetrasNombre = (nombre).slice(0,1);// tambien 2
@@ -220,26 +298,24 @@ const validarCurp = (curp) => {
 };
 
 
-
  
   return (
     <div className='container'>
-
-    <div class="input-container">
+      
+    
+    <div className="input-container">
       <label className='label'>Nombre:</label>
       <input className='input' value={nombre} onChange={(e) => setNombre(e.target.value.toUpperCase())} type= 'text'/>
      </div>
 
-     <div class="input-container">
+     <div className="input-container">
       <label className='label'>Apellido Paterno:</label>
       <input className='input' value={apellidoP} onChange={(e) => setApellidoP(e.target.value.toUpperCase())} type= 'text'/>
       </div>
-      <div class="input-container">
+      <div className="input-container">
       <label className='label'>Apellido Materno:</label>
       <input className='input' value={apellidoM} onChange={(e) => setApellidoM(e.target.value.toUpperCase())} type= 'text'/>
       </div>
-
-  
 
       <div className="input-container">
       <label className="label">Género:</label>
@@ -251,7 +327,7 @@ const validarCurp = (curp) => {
       </div>
 
 
-      <div class= "input-container">
+      <div className= "input-container">
       <label className='label'>Fecha de nacimiento:</label>
       <DatePicker 
        selected={fecha} 
@@ -259,83 +335,49 @@ const validarCurp = (curp) => {
        showYearDropdown={true}
        dateFormat="dd/MM/yyyy"
       />
-     </div>
-
-
-      <div class="input-container">
-      <label className='label'>Teléfono:</label>
-      <input className='input' value={telefono} onChange={(e) => setTelefono(e.target.value)} type= 'number'/>
-       </div>
-
-      <div class="input-container">
-      <label className='label'>Celular:</label>
-      <input className='input' value={celular} onChange={(e) => setCelular(e.target.value)} type= 'number'/>
-      </div>
-
-      <div class="input-container">
-      <label className='label'>Escuela:</label>
-      <input className='input' value={escuela} onChange={(e) => setEscuela(e.target.value)} type= 'text'/>
-      </div>
-
-      <div class="input-container">
-      <label className='label'>Trabajo:</label>
-      <input className='input' value={trabajo} onChange={(e) => setTrabajo(e.target.value)} type= 'text'/>
-      </div>
-
-      <div class="input-container">
-      <label className='label'>Pais:</label>
-      <input className='input' value={pais} onChange={(e) => setPais(e.target.value)} type= 'text'/>
       </div>
       
-      <div class="input-container">
-      <label for="estado">Estado:</label>
-     <select className='select' value={estado} onChange={(e) => setestado(e.target.value)} type= 'text'>
-    <option value="">--Selecciona una opción--</option>
-    <option value="AS">Aguascalientes</option>
-    <option value="BC">Baja California</option>
-    <option value="BS">Baja California Sur</option>
-    <option value="CC">Campeche</option>
-    <option value="CS">Chiapas</option>
-    <option value="CH">Chihuahua</option>
-    <option value="CL">Coahuila</option>
-    <option value="CM">Colima</option>
-    <option value="DF">Ciudad de México</option>
-    <option value="DG">Durango</option>
-    <option value="GT">Guanajuato</option>
-    <option value="GR">Guerrero</option>
-    <option value="HG">Hidalgo</option>
-    <option value="JC">Jalisco</option>
-    <option value="MC">Estado de México</option>
-    <option value="MN">Michoacán</option>
-    <option value="MS">Morelos</option>
-    <option value="NT">Nayarit</option>
-    <option value="NL">Nuevo León</option>
-    <option value="OC">Oaxaca</option>
-    <option value="PL">Puebla</option>
-    <option value="QT">Querétaro</option>
-    <option value="QR">Quintana Roo</option>
-    <option value="SP">San Luis Potosí</option>
-    <option value="SL">Sinaloa</option>
-    <option value="SR">Sonora</option>
-    <option value="TC">Tabasco</option>
-    <option value="TS">Tamaulipas</option>
-    <option value="TL">Tlaxcala</option>
-    <option value="VZ">Veracruz</option>
-    <option value="YN">Yucatán</option>
-    <option value="ZS">Zacatecas</option>
-    </select>
 
-    
-      <label className='label'>Ciudad:</label>
-      <input className='input' value={ciudad} onChange={(e) => setCiudad(e.target.value)} type= 'text'/>
+      <div className= "input-container">
+      <label for="estado">Estado de nacimiento:</label>
+      <select className='select' value={estado} onChange={(e) => setestado(e.target.value)} type= 'text'>
+      <option value="">--Selecciona una opción--</option>
+      <option value="AS">Aguascalientes</option>
+      <option value="BC">Baja California</option>
+      <option value="BS">Baja California Sur</option>
+      <option value="CC">Campeche</option>
+      <option value="CS">Chiapas</option>
+      <option value="CH">Chihuahua</option>
+      <option value="CL">Coahuila</option>
+      <option value="CM">Colima</option>
+      <option value="DF">Ciudad de México</option>
+      <option value="DG">Durango</option>
+      <option value="GT">Guanajuato</option>
+      <option value="GR">Guerrero</option>
+      <option value="HG">Hidalgo</option>
+      <option value="JC">Jalisco</option>
+      <option value="MC">Estado de México</option>
+      <option value="MN">Michoacán</option>
+      <option value="MS">Morelos</option>
+      <option value="NT">Nayarit</option>
+      <option value="NL">Nuevo León</option>
+      <option value="OC">Oaxaca</option>
+      <option value="PL">Puebla</option>
+      <option value="QT">Querétaro</option>
+      <option value="QR">Quintana Roo</option>
+      <option value="SP">San Luis Potosí</option>
+      <option value="SL">Sinaloa</option>
+      <option value="SR">Sonora</option>
+      <option value="TC">Tabasco</option>
+      <option value="TS">Tamaulipas</option>
+      <option value="TL">Tlaxcala</option>
+      <option value="VZ">Veracruz</option>
+      <option value="YN">Yucatán</option>
+      <option value="ZS">Zacatecas</option>
+      </select>
       </div>
 
-     <div class="input-container">
-      <label className='label'>Correo:</label>
-      <input className='input' value={correo} onChange={(e) => setCorreo(e.target.value)} type= 'text'/>
-     
-      
-    
+      <div className="input-container">
       <label className='label'>CURP:</label>
       <input
         className='input'
@@ -344,18 +386,104 @@ const validarCurp = (curp) => {
           setCurp(e.target.value.toUpperCase());
           validarCurp(e.target.value.toUpperCase());
         }}/>
+        </div>
+
+        <div className="input-container">
          <label className='label'>Verificacion:</label>
-      <input
-        className='input'
-        value={curp}
-        onChange={(e) => {
+         <input
+         className='input'
+         value={curp}
+         onChange={(e) => {
           setCurp(e.target.value.toUpperCase());
           validarCurp(e.target.value.toUpperCase());
-        }}/>
+         }}/>
       {mensajeError ? <p className='error'>{mensajeError}</p> : null} 
       </div>
+   
+    
+      <div className="input-container">
+      <label className='label'>Pais:</label>
+      <input className='input' value={pais} onChange={(e) => setPais(e.target.value)} type= 'text'/>
+      </div>
+     
 
-      <div className='button-container'>
+      <div className="input-container">
+      <label className='label'>Estado:</label>
+        <select  value={idstate}  onChange={handleStateChange}>
+          <option value="">Seleccione un estado</option>
+          {states.map(state => (
+            <option key={state.idstate} value={state.idstate}>{state.state}</option>
+          ))}
+        </select>
+        </div>
+     
+         <div className="input-container">
+        <label className='label'>Ciudad:</label>
+        <select  value={idcity} onChange={handleCityChange}>
+          <option value="">Seleccione una ciudad</option>
+          {cities.length > 0 &&cities.map(city => (
+            <option key={`${city.idcity}-${city.city}`} value={city.idcity}>{city.city}</option>
+          ))}
+        </select>
+        </div>
+
+         <div className="input-container">
+          <label className='label'>Colonia:</label>
+           <select  value={idcolony} onChange={handleColonyChange}>
+          <option value="">Seleccione una colonia</option>
+          {colonies.length > 0 &&colonies.map(colony => (
+             <option key={`${colony.idcolony}-${colony.colony}`} value={colony.idcolony}>{colony.colony}</option>
+              ))}
+           </select>
+          </div>
+
+        <div className="input-container">
+         <label className='label'>Calle:</label>
+         <input className='input' value={calle} onChange={(e) => setCalle(e.target.value)} type= 'text'/>
+           </div>
+
+        <div className="input-container">
+         <label className='label'>Numero:</label>
+         <input className='input' value={numero} onChange={(e) => setNumero(e.target.value)} type= 'text'/>
+           </div>
+
+        <div className="input-container">
+          <label className='label'>Codigo Postal:</label>
+          <select value={postal_code} onChange={handleCodigoChange}>
+              <option value="">Seleccione un Código Postal</option>
+                   { codigospostales.map(cp => (
+                <option key={cp.postal_code} value={cp.postal_code}>{cp.postal_code}</option>
+                   ))}
+          </select>
+
+           </div>
+  
+        <div className="input-container">
+      <label className='label'>Teléfono:</label>
+      <input className='input' value={telefono} onChange={(e) => setTelefono(e.target.value)} type= 'number'/>
+            </div>
+
+         <div className="input-container">
+      <label className='label'>Celular:</label>
+      <input className='input' value={celular} onChange={(e) => setCelular(e.target.value)} type= 'number'/>
+          </div>
+     
+          <div className="input-container">
+      <label className='label'>Escuela:</label>
+      <input className='input' value={escuela} onChange={(e) => setEscuela(e.target.value)} type= 'text'/>
+          </div>
+
+          <div className="input-container">
+      <label className='label'>Trabajo:</label>
+      <input className='input' value={trabajo} onChange={(e) => setTrabajo(e.target.value)} type= 'text'/>
+          </div>
+
+         <div class="input-container">
+      <label className='label'>Correo:</label>
+      <input className='input' value={correo} onChange={(e) => setCorreo(e.target.value)} type= 'text'/>
+         </div>
+
+    <div className='button-container'>
       <Link to ="/Home">
        <button className='button' onClick={guardarDatos}>Guardar</button>
       </Link>
@@ -368,12 +496,9 @@ const validarCurp = (curp) => {
              }}>Validar datos</button>
 
       </div>
-
-    </div>
+  </div>
     
-  );
+     );
 };
 
 export default Formulario;
-/*<label className='label'>estado:</label>
-      <input className='input' value={estado} onChange={(e) => setestado(e.target.value)} type= 'text'/>*/
