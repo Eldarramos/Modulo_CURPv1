@@ -13,6 +13,25 @@ button {
   justify-content: center;
   transition: all 0.5s ease;
 }
+.no-decoration{
+  text-decoration: none;
+  transition: color 0.5s ease;
+  
+}
+.no-decoration:hover p{
+  
+  color: #252525;
+}
+p{
+  transition: color 0.5s ease;
+}
+.placeBtn{
+  padding-top: 1.2rem;
+  font-style: normal;
+font-weight: 400;
+font-size: 16px;
+color: #EE5253;
+}
 .Home{
   width: 100vw;
   height: 75vh;
@@ -23,6 +42,20 @@ padding-top: 2rem;
 grid-row-gap: 10px;
 align-items: center;
 }
+.subTituloLand{
+  font-style: normal;
+font-weight: 500;
+font-size: 1.8rem;
+transition: color 0.5s ease;
+letter-spacing: 3.75px;
+
+color: #172126;
+}
+.tituloLand{
+  color: #172126;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
 body{
   background: #F1F5F8;
 }
@@ -32,12 +65,13 @@ button:hover {
   color: white;
 }
 
-h1 {
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
+img[alt='Boton-Agregar']{
+  width: auto;
+  height: 9rem;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+
+  
 }
 
 .button-container {
@@ -45,4 +79,40 @@ h1 {
   align-items: center;
   justify-content: center;
   padding-bottom: 2rem;
+}
+
+.land{
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  
+}
+.bienvenidoText{
+  display: flex;
+  padding-left: 5rem;
+}
+#contenedor-land{
+  width: 100%;
+  
+  background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 44px;
+}
+
+@media screen and (max-width: 768px) {
+  
+  .bienvenidoText{
+    width: 100%;
+    padding-left: 0;
+    justify-content: center;
+  }
+  #contenedor-land{
+    width: 90vw!important;
+    margin-top: 5rem;
+    text-align: center;
+  }
+  #landing-p{
+    height: 100%;
+  }
+  
 }
