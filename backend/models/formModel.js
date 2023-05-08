@@ -1,14 +1,14 @@
 import db from '../database/db.js'
 import { DataTypes } from 'sequelize'
-
-const formModel = db.define('forms',{
+//se cambio de forms a Inscripciones
+const formModel = db.define('Inscripciones',{
    nombre: {type: DataTypes.STRING},
     apellidoP: {type: DataTypes.STRING},
     apellidoM: {type: DataTypes.STRING},
     genero: {type: DataTypes.STRING},
     fecha: {type:DataTypes.DATE},
-    telefono: {type: DataTypes.NUMBER},
-    celular: {type: DataTypes.NUMBER},
+    telefono: {type: DataTypes.STRING},//se cambio a STRING
+    celular: {type: DataTypes.STRING},// se cambio a STRING
     escuela: {type: DataTypes.STRING},
     trabajo: {type: DataTypes.STRING},
     pais: {type: DataTypes.STRING},
