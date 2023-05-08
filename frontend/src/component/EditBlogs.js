@@ -1,8 +1,13 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useNavigate, useParams, Link} from 'react-router-dom'
+import Navbar from "./navbar";
 
-const URI  = 'http://localhost:8000/forms/'
+import Flecha from "../img/Flecha.png";
+
+
+
+const URI  = 'http://localhost:8000/Inscripciones/'
 const URI2 = 'http://localhost:8000/states/'
 
 const CompEditBlog = () => {
@@ -19,7 +24,7 @@ const CompEditBlog = () => {
   const [postal_code, setPostal_code] = useState('');
   const [telefono, setTelefono] = useState('');
   const [celular, setCelular] = useState('');
-  const [escuela] = useState('');
+  const [escuela, setEscuela] = useState('');
   const [trabajo, setTrabajo] = useState('');
   const [correo, setCorreo] = useState('');
   const [curp, setCurp] = useState('');
@@ -122,14 +127,21 @@ const CompEditBlog = () => {
         setCurp(res.data.curp)
         setNombre(res.data.nombre)
         setApellidoP(res.data.apellidoP)
-        setApellidoM(res.data.setApellidoM)
+        setApellidoM(res.data.apellidoM)
+        setEscuela(res.data.escuela)
 
 
     }
 
     return(
+      <div>
+          <Navbar></Navbar> 
+          <Link to="/CompBlogs">
+        <img className="Regreso" alt="Flecha" src={Flecha}></img>
+        <p className="textoRegreso">Inicio</p>
+      </Link>
         <div className='container'>
-
+       
       <div class="input-container">
       <label className='label'>Nombre:</label>
       <input className='input' value={nombre} readOnly/>
@@ -237,6 +249,7 @@ const CompEditBlog = () => {
       
       
       <button className='button' onClick={update}>Guardar</button>
+    </div>
     </div>
     
 

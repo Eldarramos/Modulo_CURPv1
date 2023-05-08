@@ -3,9 +3,12 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import Añadir from "../img/Añadir.png";
 import Entrar from "../img/Entrar.png";
+import Navbar from "./navbar";
 
 function Home() {
   return (
+    <div>
+     <Navbar></Navbar>
     <div className="container land pt-4 pb-4  d-flex" id="landing-p">
       <div className="row w-100">
         <div className="col-12 mt-2 mb-md-3 mb-sm-0">
@@ -47,6 +50,7 @@ function Home() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
