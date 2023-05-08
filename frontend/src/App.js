@@ -1,29 +1,37 @@
+import logo from "./logo.svg";
 import "./App.css";
-import Login from "./Login";
-import Header from "./Header";
-import CompBlogs from "./component/SBlogs";
-import CompEditBlog from "./component/EditBlogs";
-import StepperExample from "./component/stepper";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Routes, Route } from "react-router-dom";
+import Login from "./components/login";
+import UserProvider from "./userProvider";
 
-import Home from "./component/Home";
-import Formulario from "./component/Form";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+//Modulo CURP
+import CompBlogs from './components/SBlogs'
+import CompEditBlog from './components/EditBlogs'
+import Home from './components/Home';
+import Formulario from './components/Form';
+
+
+
+
+
 
 function App() {
   return (
-    <BrowserRouter>
+    <UserProvider>
       <div className="App">
-        <Header />
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Formulario" element={<Formulario />} />
-          <Route path="/stepper" element={<StepperExample />} />
-          <Route path="/CompBlogs" element={<CompBlogs />} />
-          <Route path="/edit/:id" element={<CompEditBlog />} />
+          <Route index path="/" exact element={<Login />} /> 
+          <Route path="/Home" element={<Home/>} />
+          <Route path='/Formulario' element={<Formulario/>}/>
+          <Route path='/CompBlogs' element={<CompBlogs/>}/>
+          <Route path='/edit/:id' element={<CompEditBlog/>}/>  
+
         </Routes>
       </div>
-    </BrowserRouter>
+    </UserProvider>
   );
 }
 
