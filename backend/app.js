@@ -12,7 +12,7 @@ const app = express ()
 
 app.use(cors())
 app.use(express.json())
-app.use('/forms', formRoutes)
+app.use('/Inscripciones', formRoutes)
 //11 abril
 app.use('/states', routerStates)
 //12 abril
@@ -33,5 +33,5 @@ app.get('/', (req,res) =>{
 })
 
 app.listen(8000, () => {
-    console.log('server UP running in http://localhost:8000/')
+    console.log('server UP running in http://localhost:8000/') //cambie la ruta
 })
