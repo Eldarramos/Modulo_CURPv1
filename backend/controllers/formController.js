@@ -1,23 +1,23 @@
 import formModel from "../models/formModel.js";
 
-
+//forms
 export const getAllForm = async (req, res) => {
     try {
-        const forms = await formModel.findAll();
-        res.json(forms)
+        const Inscripciones = await formModel.findAll();
+        res.json(Inscripciones)
     } catch (error) {
         res.json( {message: error.message})
     }
 }
-
+//form
 export const getForm = async (req, res) => {
     try {
-        const form = await formModel.findAll({
+        const inscripcion = await formModel.findAll({
             where:{ 
                 id: req.params.id
             }
         })
-        res.json(form[0])
+        res.json(inscripcion[0])
     } catch (error) {
         res.json( {message: error.message})
     }
