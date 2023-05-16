@@ -13,6 +13,29 @@ button {
   justify-content: center;
   transition: all 0.5s ease;
 }
+.regreso{
+  position: absolute;
+  left: 5%;
+  font-size: 1.8rem;
+  top: 13.5%;
+  color: #6c63ff;
+}
+#indicador{
+  position: absolute;
+  left: 8%;
+  font-size: 1.6rem;
+  top: 13.78%;
+  font-family: 'Circular Std';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+transition: color 0.3s ease;
+
+color: #172126;
+}
+#indicador:hover{
+  color: #6c63ff;
+}
 .no-decoration{
   text-decoration: none;
   transition: color 0.5s ease;
