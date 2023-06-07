@@ -11,33 +11,40 @@ import { ArrowLeft } from "react-bootstrap-icons";
 
 const URI = "http://localhost:8000/Inscripciones/";
 
-const CompBlogs = () => {
-  const [showModal, setShowModal] = useState(false);
 
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+
+const CompBlogs = () => {
+  
 
   //Configuracion hooks
-  const [blogs, setBlog] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+  //Se toma una variable local 
   useEffect(() => {
-    getBlogs();
+    const correoColab = "erramos@uda.edu.mx"
+    getBlogs(correoColab);
   }, []);
 
-  //Mostrar blogs
-  const getBlogs = async () => {
-    const res = await axios.get(URI);
-    setBlog(res.data);
+  //Mostrar informacion del prospecto
+  const getBlogs = async (correoColab) => {
+    //Se busca y se filtra en la DB el correo del colaborador
+    try {
+      const res = await axios.get(URI);
+      const filteredBlogs = res.data.filter(blog => blog.correoColab === correoColab);
+      setBlogs(filteredBlogs);
+    } catch (error) {
+      console.error("Error al obtener los prospectos:", error);
+    }
   };
 
-  //Borrar blogs
-  const deleteBlogs = async (id) => {
+  //Borrar prospecto
+  /*const deleteBlogs = async (id) => {
     await axios.delete(`${URI}${id}`);
     getBlogs();
-  };
+  };*/
 
-  //Incluir seguimiento
 
-  const getDaysElapsed = (date) => {
+  //Incluir seguimiento NO ACTIVADO
+  /*const getDaysElapsed = (date) => {
     const today = moment();
     const targetDate = moment(date);
     return today.diff(targetDate, "days");
@@ -49,7 +56,9 @@ const CompBlogs = () => {
 
   const getStatusColor = (daysElapsed) => {
     return daysElapsed > 7 ? "red" : "green";
-  };
+  };*/
+
+  
 
   return (
     <div>

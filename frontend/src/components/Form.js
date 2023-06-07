@@ -52,6 +52,9 @@ const Formulario = () => {
 
   const [correoValido, setCorreoValido] = useState(true);
 
+  const [correoColab, setCorreoColab] = useState("");
+  const [correoColabValido, setCorreoColabValido] = useState(false);
+
   // estilo stepper
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -87,7 +90,7 @@ const Formulario = () => {
 
   //Accion de stepper
   const nextStep = () => {
-    if (activeStep < 3) setActiveStep((currentStep) => currentStep + 1);
+    if (activeStep < 4) setActiveStep((currentStep) => currentStep + 1);
   };
 
   const prewStep = () => {
@@ -106,6 +109,18 @@ const Formulario = () => {
       setCorreoValido(false);
     }
   };
+
+  //ID_COlaborador 23-may  no funciona 
+  /*useEffect(() => {
+    axios
+      .get(`http://localhost:8000/Colaborador/`)
+      .then((response) => {
+        setCorre(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);*/
 
   useEffect(() => {
     axios
@@ -170,11 +185,11 @@ const Formulario = () => {
   const handleCodigoChange = (event) => {
     setPostal_code(event.target.value);
   };
-  //Funcion para guardar datos en db
-
+  //Funcion para guardar datos todos los input en db
   const guardarDatos = async (e) => {
     e.preventDefault();
     await axios.post(URI, {
+      correoColab: correoColab,
       nombre: nombre,
       apellidoP: apellidoP,
       apellidoM: apellidoM,
@@ -202,6 +217,13 @@ const Formulario = () => {
     const value = e.target.value;
     setCurp(value);
     setIsValid(validarCurp(value));
+  };
+
+  //Toma el valor del correo del colaborador para que se agrege a DB
+  const handleCorreoChange = (e) => {
+    const nuevoCorreo = e.target.value;
+    setCorreoColab(nuevoCorreo);
+    validarCorreoColab(nuevoCorreo);
   };
 
   // Función para validar datos
@@ -553,51 +575,7 @@ const Formulario = () => {
     }
   };
 
-  //Validadr la curp
-
-  /*const validarCurpEnDB = async (curp) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/Inscripciones?curp=${curp}`);
-      if (response.data.existe) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }*/
-
-  /*const validarCurpEnDB = async (curp) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/Inscripciones?curp=${curp}`);
-      if (response.data.count > 0) {
-        return true; // La CURP existe en la base de datos
-      } else {
-        return false; // La CURP no existe en la base de datos
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }*/
-
-  /*const validarCurpEnDB = async (curp) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/Inscripciones?curp=${curp}`);
-      if (response.data.length > 0) {
-        const registro = response.data[0]; // Obtiene el primer registro que contiene la CURP
-        if (registro.curp === curp) {
-          return true; // La CURP existe en la base de datos y es igual a la ingresada
-        }
-      }
-      return false; // La CURP no existe en la base de datos o no es igual a la ingresada
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }*/
+ 
   const validarCurpEnDB = async (curp) => {
     try {
       const response = await axios.get(
@@ -615,12 +593,29 @@ const Formulario = () => {
     }
   };
 
+  //Valida correo del colaborador para que se agrege a DB
+
+  const validarCorreoColab = (correoColab) => {
+    // Expresión regular para validar el formato del correo electrónico
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    if (correoColab.trim() === "" || (regexCorreo.test(correoColab) && correoColab.endsWith("@uda.edu.mx"))) {
+      setCorreoColabValido(true);
+    } else {
+      setCorreoColabValido(false);
+    }
+  };
+  
+//Renderizado
   return (
     <div>
       <Navbar></Navbar>
       <div className={classes.root}>
         <div>
           <Stepper activeStep={activeStep}>
+          <Step>
+              <StepLabel>Datos Colaborador:</StepLabel>
+            </Step>
             <Step>
               <StepLabel>Validacion de Datos:</StepLabel>
             </Step>
@@ -633,12 +628,41 @@ const Formulario = () => {
           </Stepper>
           {activeStep === 0 && (
             <div>
-              <Link to="/home">
+              {/* ...Regresa a Home */}
+               <Link to="/home">
                 <ArrowLeft className="ml-4 regreso" />
                 <span style={{ marginBottom: "100px" }} id="indicador">
                   Menu Cambaceo
                 </span>
-              </Link>
+                </Link>
+                   {/* ..stepper para correo del colaborador */}
+               <div className="input-container center">
+                <label className="label col-md-6 px-4 my-2">Porfavor para continuar ingresa tu correo institucional:</label>
+                <input className="input col-md-6 px-4 my-2"  placeholder="ejemplo@uda.edu.mx" value={correoColab} 
+                onChange={(e) => {
+                  handleCorreoChange(e);
+                  validarCorreoColab(e.target.value);
+                }}/>
+                {/* ...Validacion de informacion de correo */}
+                     {correoColab !== "" && (
+                       <span className={correoColabValido ? "valido" : "invalido"}>
+                         {correoColabValido ? "Correo válido" : "Correo inválido"}
+                       </span>
+                       )}
+                   <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick= {nextStep}
+                    disabled={!correoColabValido || correoColab.trim() === ""}
+                  >
+                    Siguiente
+                  </Button>
+               </div>
+             </div>
+          )}
+          {activeStep === 1 && (
+            <div>
+             
               <div className="input-container">
                 <label className="label col-md-6 px-4 my-2">Nombre:</label>
                 <input
@@ -803,7 +827,7 @@ const Formulario = () => {
               </Button>
             </div>
           )}
-          {activeStep === 1 && (
+          {activeStep === 2 && (
             <div>
               <div className="input-container">
                 <label className="label col-md-6 px-4 my-2">Pais:</label>
@@ -932,7 +956,7 @@ const Formulario = () => {
               </div>
             </div>
           )}
-          {activeStep === 2 && (
+          {activeStep === 3 && (
             <div>
               <div className="input-container">
                 <label className="label col-md-6 px-4 my-2">Teléfono:</label>

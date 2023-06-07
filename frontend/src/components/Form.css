@@ -135,5 +135,20 @@ th {
   top: 12.5%;
 }
 
+/*-----Input correo colaborardor-----*/
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/*----Cambiar el mensaje de correo valido-------*/
+.valido {
+  color: green;
+}
+
+
 
 
