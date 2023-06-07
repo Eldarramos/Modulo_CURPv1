@@ -2,7 +2,9 @@ import db from '../database/db.js'
 import { DataTypes } from 'sequelize'
 //se cambio de forms a Inscripciones
 const formModel = db.define('Inscripciones',{
-   nombre: {type: DataTypes.STRING},
+    //23-may Se incluyo el correo del colaborador en la DB
+    correoColab: {type: DataTypes.STRING},
+    nombre: {type: DataTypes.STRING},
     apellidoP: {type: DataTypes.STRING},
     apellidoM: {type: DataTypes.STRING},
     genero: {type: DataTypes.STRING},
