@@ -138,7 +138,7 @@ const CompEditBlog = () => {
       <Navbar></Navbar>
 
       <div className="Colab">
-        <div className="container-fluid px-4 pb-3">
+        <div className="container-fluid px-4">
           <div className="row table_space mt-4">
             <div className="col-md-12 d-flex justify-content-center align-items-center mb-3">
               <Link to="/CompBlogs">
