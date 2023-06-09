@@ -11,16 +11,12 @@ import { ArrowLeft } from "react-bootstrap-icons";
 
 const URI = "http://localhost:8000/Inscripciones/";
 
-
-
 const CompBlogs = () => {
-  
-
   //Configuracion hooks
   const [blogs, setBlogs] = useState([]);
-  //Se toma una variable local 
+  //Se toma una variable local
   useEffect(() => {
-    const correoColab = "erramos@uda.edu.mx"
+    const correoColab = "erramos@uda.edu.mx";
     getBlogs(correoColab);
   }, []);
 
@@ -29,7 +25,9 @@ const CompBlogs = () => {
     //Se busca y se filtra en la DB el correo del colaborador
     try {
       const res = await axios.get(URI);
-      const filteredBlogs = res.data.filter(blog => blog.correoColab === correoColab);
+      const filteredBlogs = res.data.filter(
+        (blog) => blog.correoColab === correoColab
+      );
       setBlogs(filteredBlogs);
     } catch (error) {
       console.error("Error al obtener los prospectos:", error);
@@ -41,7 +39,6 @@ const CompBlogs = () => {
     await axios.delete(`${URI}${id}`);
     getBlogs();
   };*/
-
 
   //Incluir seguimiento NO ACTIVADO
   /*const getDaysElapsed = (date) => {
@@ -57,8 +54,6 @@ const CompBlogs = () => {
   const getStatusColor = (daysElapsed) => {
     return daysElapsed > 7 ? "red" : "green";
   };*/
-
-  
 
   return (
     <div>
@@ -94,7 +89,7 @@ const CompBlogs = () => {
                         <th className="padding">Opciones</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{ verticalAlign: "middle" }}>
                       {blogs.map((blog) => (
                         <tr key={blog.id}>
                           <td>
@@ -112,7 +107,7 @@ const CompBlogs = () => {
                           <td>
                             <Link
                               to={`/edit/${blog.id}`}
-                              className="btn btn-info w-50 p-2 mt-1"
+                              className="btn  w-50 p-2 mt-1"
                             >
                               <i className="fa-solid fa-pen-to-square"></i>
                             </Link>
