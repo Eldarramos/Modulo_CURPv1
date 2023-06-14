@@ -254,7 +254,7 @@ const CompEditBlog = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-12 d-flex justify-content-end">
+              <div className="col-md-12 d-flex justify-content-end pt-2">
                 <button id="btnGuardar" onClick={update}>
                   Guardar
                 </button>

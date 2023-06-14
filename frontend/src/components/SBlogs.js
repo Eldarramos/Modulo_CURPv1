@@ -76,7 +76,7 @@ const CompBlogs = () => {
                 <div className="container">
                   <table
                     className="table table-striped table-bordered"
-                    cellspacing="0"
+                    cellSpacing="0"
                     width="100%"
                   >
                     <thead>

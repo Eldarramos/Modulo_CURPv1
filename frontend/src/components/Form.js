@@ -85,6 +85,25 @@ const Formulario = () => {
     steps: {
       backgroundColor: "#E4897B",
     },
+    btnSig: {
+      backgroundColor: "#EE5253",
+      color: "#FFFF",
+      marginTop: "20px",
+      marginBottom: "20px",
+      padding: "0 1rem",
+      width: "10rem",
+      height: "3rem",
+      borderRadius: "38.5px",
+    },
+    btnCancelar: {
+      background: "#FFFFFF",
+      border: "3px solid #EE5253",
+      borderRadius: "38.5px",
+      color: "#EE5253",
+      padding: "0 1rem",
+      width: "10rem",
+      height: "3rem",
+    },
   }));
   const classes = useStyles();
 
@@ -110,7 +129,7 @@ const Formulario = () => {
     }
   };
 
-  //ID_COlaborador 23-may  no funciona 
+  //ID_COlaborador 23-may  no funciona
   /*useEffect(() => {
     axios
       .get(`http://localhost:8000/Colaborador/`)
@@ -575,7 +594,6 @@ const Formulario = () => {
     }
   };
 
- 
   const validarCurpEnDB = async (curp) => {
     try {
       const response = await axios.get(
@@ -598,22 +616,25 @@ const Formulario = () => {
   const validarCorreoColab = (correoColab) => {
     // Expresión regular para validar el formato del correo electrónico
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-    if (correoColab.trim() === "" || (regexCorreo.test(correoColab) && correoColab.endsWith("@uda.edu.mx"))) {
+
+    if (
+      correoColab.trim() === "" ||
+      (regexCorreo.test(correoColab) && correoColab.endsWith("@uda.edu.mx"))
+    ) {
       setCorreoColabValido(true);
     } else {
       setCorreoColabValido(false);
     }
   };
-  
-//Renderizado
+
+  //Renderizado
   return (
     <div>
       <Navbar></Navbar>
       <div className={classes.root}>
         <div>
           <Stepper activeStep={activeStep}>
-          <Step>
+            <Step>
               <StepLabel>Datos Colaborador:</StepLabel>
             </Step>
             <Step>
@@ -629,40 +650,49 @@ const Formulario = () => {
           {activeStep === 0 && (
             <div>
               {/* ...Regresa a Home */}
-               <Link to="/home">
-                <ArrowLeft className="ml-4 regreso" />
-                <span style={{ marginBottom: "100px" }} id="indicador">
+              <Link to="/home">
+                <ArrowLeft className="ml-4 regreso" style={{ top: "20%" }} />
+                <span
+                  style={{ marginBottom: "100px", top: "20.3%" }}
+                  id="indicador"
+                >
                   Menu Cambaceo
                 </span>
-                </Link>
-                   {/* ..stepper para correo del colaborador */}
-               <div className="input-container center">
-                <label className="label col-md-6 px-4 my-2">Porfavor para continuar ingresa tu correo institucional:</label>
-                <input className="input col-md-6 px-4 my-2"  placeholder="ejemplo@uda.edu.mx" value={correoColab} 
-                onChange={(e) => {
-                  handleCorreoChange(e);
-                  validarCorreoColab(e.target.value);
-                }}/>
+              </Link>
+              {/* ..stepper para correo del colaborador */}
+              <div className="input-container center">
+                <label className="label col-md-6 px-4 my-2">
+                  Porfavor para continuar ingresa tu correo institucional:
+                </label>
+                <input
+                  className="input col-md-6 px-4 my-2"
+                  placeholder="ejemplo@uda.edu.mx"
+                  value={correoColab}
+                  onChange={(e) => {
+                    handleCorreoChange(e);
+                    validarCorreoColab(e.target.value);
+                  }}
+                />
                 {/* ...Validacion de informacion de correo */}
-                     {correoColab !== "" && (
-                       <span className={correoColabValido ? "valido" : "invalido"}>
-                         {correoColabValido ? "Correo válido" : "Correo inválido"}
-                       </span>
-                       )}
-                   <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick= {nextStep}
-                    disabled={!correoColabValido || correoColab.trim() === ""}
-                  >
-                    Siguiente
-                  </Button>
-               </div>
-             </div>
+                {correoColab !== "" && (
+                  <span className={correoColabValido ? "valido" : "invalido"}>
+                    {correoColabValido ? "Correo válido" : "Correo inválido"}
+                  </span>
+                )}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.btnSig}
+                  onClick={nextStep}
+                  disabled={!correoColabValido || correoColab.trim() === ""}
+                >
+                  Siguiente
+                </Button>
+              </div>
+            </div>
           )}
           {activeStep === 1 && (
             <div>
-             
               <div className="input-container">
                 <label className="label col-md-6 px-4 my-2">Nombre:</label>
                 <input
@@ -819,6 +849,7 @@ const Formulario = () => {
               </button>
 
               <Button
+                className={classes.btnSig}
                 variant="outlined"
                 color="primary"
                 onClick={() => nextStep()}
@@ -940,6 +971,7 @@ const Formulario = () => {
                     variant="outlined"
                     color="primary"
                     onClick={() => nextStep()}
+                    className={classes.btnSig}
                   >
                     Siguiente
                   </Button>
@@ -949,6 +981,7 @@ const Formulario = () => {
                     variant="outlined"
                     color="primary"
                     onClick={() => prewStep()}
+                    className={classes.btnCancelar}
                   >
                     Regresar
                   </Button>

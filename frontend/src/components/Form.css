@@ -127,28 +127,33 @@ th {
   left: 10%;
   top: 12.5%;
 }
-#btnGuardar{
+#btnGuardar, .btnSig{
   background: #EE5253;
 border: 5px solid #EE5253;
 border-radius: 38.5px;
 color: #FFFFFF;
-
+width: 10rem;
+height: 3rem;
 padding: 0 1rem;
 
 
 text-align: center;
 }
-#btnCancelar{
+#btnCancelar, .btnCancelar{
   background: #FFFFFF;
 border: 3px solid #EE5253;
 border-radius: 38.5px;
 color: #EE5253;
 padding: 0 1rem;
-
+width: 10rem;
+height: 3rem;
 
 text-align: center;
 
 }
+
+
+
 
 /*-----Input correo colaborardor-----*/
 
