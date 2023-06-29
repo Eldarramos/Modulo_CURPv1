@@ -651,9 +651,9 @@ const Formulario = () => {
             <div>
               {/* ...Regresa a Home */}
               <Link to="/home">
-                <ArrowLeft className="ml-4 regreso" style={{ top: "20%" }} />
+                <ArrowLeft className="ml-4 regreso" />
                 <span
-                  style={{ marginBottom: "100px", top: "20.3%" }}
+                  // style={{ marginBottom: "100px", top: "20.3%" }}
                   id="indicador"
                 >
                   Menu Cambaceo

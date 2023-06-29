@@ -66,56 +66,60 @@ const CompBlogs = () => {
           </span>
         </Link>
         <div>
-          <div className="row ">
-            <div className="container">
+          <div className="row mt-5">
+            <div className="container-fluid mt-1">
               <div className="col-md-12">
                 <h1 className="text-center">Inscripciones</h1>
               </div>
 
               <div className="col-md-12">
-                <div className="container">
-                  <table
-                    className="table table-striped table-bordered"
-                    cellSpacing="0"
-                    width="100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th className="th-sm">Nombre</th>
-                        <th className="th-sm">Fecha Incripcion</th>
-                        <th className="th-sm">Celular</th>
-                        <th className="th-sm">Correo</th>
+                <div className="container-fluid ">
+                  <div className="table-responsive">
+                    <table
+                      className="table table-striped table-bordered"
+                      cellSpacing="0"
+                      width="100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th className="th-sm">Nombre</th>
+                          <th className="th-sm">Fecha Incripcion</th>
+                          <th className="th-sm">Celular</th>
+                          <th className="th-sm">Correo</th>
 
-                        <th className="padding">Opciones</th>
-                      </tr>
-                    </thead>
-                    <tbody style={{ verticalAlign: "middle" }}>
-                      {blogs.map((blog) => (
-                        <tr key={blog.id}>
-                          <td>
-                            <div>{blog.nombre}</div>
-                            <div>
-                              {blog.apellidoP} {blog.apellidoM}
-                            </div>
-                          </td>
-                          <td style={{ fontSize: "0.7em" }}>
-                            {blog.createdAt}
-                          </td>
-                          <td style={{ fontSize: "0.7em" }}>{blog.celular}</td>
-                          <td style={{ fontSize: "0.7em" }}>{blog.correo}</td>
-
-                          <td>
-                            <Link
-                              to={`/edit/${blog.id}`}
-                              className="btn  w-50 p-2 mt-1"
-                            >
-                              <i className="fa-solid fa-pen-to-square"></i>
-                            </Link>
-                          </td>
+                          <th className="padding">Opciones</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody style={{ verticalAlign: "middle" }}>
+                        {blogs.map((blog) => (
+                          <tr key={blog.id}>
+                            <td>
+                              <div>{blog.nombre}</div>
+                              <div>
+                                {blog.apellidoP} {blog.apellidoM}
+                              </div>
+                            </td>
+                            <td style={{ fontSize: "0.7em" }}>
+                              {blog.createdAt}
+                            </td>
+                            <td style={{ fontSize: "0.7em" }}>
+                              {blog.celular}
+                            </td>
+                            <td style={{ fontSize: "0.7em" }}>{blog.correo}</td>
+
+                            <td>
+                              <Link
+                                to={`/edit/${blog.id}`}
+                                className="btn  w-50 p-2 mt-1"
+                              >
+                                <i className="fa-solid fa-pen-to-square"></i>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

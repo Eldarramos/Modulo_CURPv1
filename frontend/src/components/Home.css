@@ -16,6 +16,7 @@ button {
 .regreso{
   position: absolute;
   left: 5%;
+  top: 20%;
   font-size: 1.8rem;
   top: 13.5%;
   color: #6c63ff;
@@ -23,6 +24,8 @@ button {
 #indicador{
   position: absolute;
   left: 8%;
+  margin-bottom: 100px;
+  top: 20.3%;
   font-size: 1.6rem;
   top: 13.78%;
   font-family: 'Circular Std';
@@ -123,7 +126,9 @@ border-radius: 44px;
 }
 
 @media screen and (max-width: 768px) {
-  
+  .regreso{
+    top: 10%;
+  }
   .bienvenidoText{
     width: 100%;
     padding-left: 0;
@@ -137,5 +142,9 @@ border-radius: 44px;
   #landing-p{
     height: 100%;
   }
+#indicador{
+  left: 19%;
+  top: 10.5%;
+}
   
 }
