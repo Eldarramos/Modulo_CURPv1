@@ -31,6 +31,11 @@ const CompEditBlog = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  //Se agregan estas constantes para almacenar valores de telefono y celular
+  const [telefonoError, setTelefonoError] = useState(false);
+  const [celularError, setCelularError] = useState(false);
+
+
   const update = async (e) => {
     e.preventDefault();
     await axios.put(URI + id, {
@@ -116,22 +121,49 @@ const CompEditBlog = () => {
     getBlogById();
   }, []);
 
+  //Validacion de 10 digitos en numero de telefono y celular
+  const handleTelefonoChange = (e) => {
+    const value = e.target.value;
+    setTelefono(value);
+
+    if (value.length !== 10) {
+      setTelefonoError(true);
+    } else {
+      setTelefonoError(false);
+    }
+  };
+
+  const handleCelularChange = (e) => {
+    const value = e.target.value;
+    setCelular(value);
+
+    if (value.length !== 10) {
+      setCelularError(true);
+    } else {
+      setCelularError(false);
+    }
+  };
+
   const getBlogById = async () => {
     const res = await axios.get(URI + id);
     setTelefono(res.data.telefono);
     setCelular(res.data.celular);
     setCorreo(res.data.correo);
     setTrabajo(res.data.trabajo);
-    setIdstate(res.data.states);
-    setIdcity(res.data.cities);
-    setIdColony(res.data.colonies);
+    setIdstate(res.data.idstate);
+    setIdcity(res.data.idcity);
+    setIdColony(res.data.idcolony);
     setPostal_code(res.data.postal_code);
     setCurp(res.data.curp);
     setNombre(res.data.nombre);
     setApellidoP(res.data.apellidoP);
     setApellidoM(res.data.apellidoM);
     setEscuela(res.data.escuela);
+    setCalle(res.data.calle);
+    setNumero(res.data.numero);
+    setPais(res.data.pais);
   };
+
 
   return (
     <div>
@@ -172,23 +204,25 @@ const CompEditBlog = () => {
                     <input className="input" value={apellidoM} readOnly />
                   </div>
                   <div className="col-md-3 my-2">
-                    <label className="label">Telefono:</label>
-                    <input
-                      className="input"
-                      value={telefono}
-                      type="number"
-                      onChange={(e) => setTelefono(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-md-4 my-2">
-                    <label className="label">Celular:</label>
-                    <input
-                      className="input"
-                      value={celular}
-                      onChange={(e) => setCelular(e.target.value)}
-                      type="number"
-                    />
-                  </div>
+                    <label className="label">Teléfono:</label>
+                       <input
+                          className={telefonoError ? 'input error' : 'input'}
+                          value={telefono}
+                          onChange={handleTelefonoChange}
+                          type="text"
+                         />
+                        {telefonoError && <p className="error-message">El teléfono debe tener 10 caracteres.</p>}
+                   </div>
+                   <div className="col-md-4 my-2">
+                       <label className="label">Celular:</label>
+                          <input
+                            className={celularError ? 'input error' : 'input'}
+                            value={celular}
+                            onChange={handleCelularChange}
+                            type="text"
+                           />
+                          {celularError && <p className="error-message">El celular debe tener 10 caracteres.</p>}
+                      </div>
                   <div className="col-md-4 my-2">
                     <label className="label">Correo:</label>
                     <input className="input" value={correo} readOnly />
@@ -290,8 +324,8 @@ const CompEditBlog = () => {
           <input
             className="input"
             value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-            type="number"
+            readOnly 
+            type="text"
           />
         </div>
 
@@ -300,8 +334,8 @@ const CompEditBlog = () => {
           <input
             className="input"
             value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-            type="number"
+            readOnly 
+            type="text"
           />
         </div>
 
@@ -310,7 +344,7 @@ const CompEditBlog = () => {
           <input
             className="input"
             value={pais}
-            onChange={(e) => setPais(e.target.value)}
+            readOnly 
             type="text"
           />
         </div>
