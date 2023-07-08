@@ -692,7 +692,7 @@ const Formulario = () => {
             </div>
           )}
           {activeStep === 1 && (
-            <div>
+            <div className="col-12">
               <div className="input-container">
                 <label className="label col-md-6 px-4 my-2">Nombre:</label>
                 <input
@@ -740,17 +740,18 @@ const Formulario = () => {
                 </select>
               </div>
 
-              <div className="input-container">
-                <label className="label col-md-6 px-4 my-2">
-                  Fecha de nacimiento:
-                </label>
-                <DatePicker
-                  className="col-md-6 px-4 my-2"
-                  selected={fecha}
-                  onChange={(date) => setFecha(date)}
-                  showYearDropdown={true}
-                  dateFormat="yyyy-MM-dd"
-                />
+              <div className=" col-md-12  d-flex">
+                <div className="label col-md-6 col-sm-12 my-2 px-4 ">
+                  <label style={{ width: "62%" }}>Fecha de nacimiento:</label>
+                </div>
+                <div className="col-md-6  my-2 px-4 ">
+                  <DatePicker
+                    selected={fecha}
+                    onChange={(date) => setFecha(date)}
+                    showYearDropdown={true}
+                    dateFormat="yyyy-MM-dd"
+                  />
+                </div>
               </div>
 
               <div className="input-container">
