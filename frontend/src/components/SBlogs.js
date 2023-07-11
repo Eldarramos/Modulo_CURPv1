@@ -9,16 +9,26 @@ import moment from "moment";
 import Flecha from "../img/Flecha.png";
 import { ArrowLeft } from "react-bootstrap-icons";
 
+import { GoogleLogin } from 'react-google-login';
+
 const URI = "http://localhost:8000/Inscripciones/";
 
 const CompBlogs = () => {
   //Configuracion hooks
   const [blogs, setBlogs] = useState([]);
-  //Se toma una variable local
-  useEffect(() => {
-    const correoColab = "erramos@uda.edu.mx";
+
+  //Verificacion con google
+  const [showModal, setShowModal] = useState(true);
+  
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const responseGoogle = (response) => {
+    const correoColab = response.profileObj.email;
     getBlogs(correoColab);
-  }, []);
+    handleCloseModal();
+  };
 
   //Mostrar informacion del prospecto
   const getBlogs = async (correoColab) => {
@@ -126,6 +136,22 @@ const CompBlogs = () => {
           </div>
         </div>
       </div>
+      {showModal && (
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Iniciar sesión con Google</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <GoogleLogin
+              clientId="422356463744-6ph6gvs0ge55fqli9nkv09lhfpu0amjv.apps.googleusercontent.com"
+              buttonText="Iniciar sesión con Google"
+              onSuccess={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+              id="google-login-button"
+            />
+          </Modal.Body>
+        </Modal>
+      )}
     </div>
   );
 };
